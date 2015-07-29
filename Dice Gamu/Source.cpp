@@ -131,7 +131,7 @@ void compare()
 
 void cheat()
 {
-	winRate = aiPoints / (aiPoints + playerPoints);
+	winRate = (float)aiPoints / ((float)aiPoints + (float)playerPoints);
 	int pTotal = playerDie[0] + playerDie[1];
 	//int aiTotal = aiDie[0] + aiDie[1];
 	if(winRate >= 0.69f)
@@ -139,6 +139,8 @@ void cheat()
 		for(int i = 0; i < 2; i++)
 			{
 				aiDie[i] = roll();
+				if(aiDie[i] < 6)
+					aiDie[i] +=  1;
 			}
 	} else {
 		if(playerDie[0] == playerDie[1])
