@@ -35,36 +35,43 @@ void update()
 
 void updateWin(int type, int vari)
 {
+	int e = 0;
 	for(int i = 0; i < 3; i++)
 	{
-		
-		cout << "    |    |   "  << endl;
+		cout << "     |     |    "  << endl;
 		for(int x = 0; x < 3; x++)
 		{
-			int e = ((i+1)*(x+1))-1;
-			cout << "  " << board[e];
-			if(x != 2) cout << " |";
+			
+	string str = "  "; 
+			if(type == 0)
+			{
+				if(vari == i)
+					str = "==";
+			} else if (type == 1)
+			{
+				if(vari == x)
+					str = "==";
+			} else {
+				if(e == 4)
+					str = "==";
+				if(vari == 0)
+				{
+					if(e == 0 || e == 8)
+						str = "==";
+				} else
+					if(e == 2 || e == 6)
+						str = "==";
+			}
+			cout << str << board[e] << str;
+			if(x != 2) cout << "|";
+			e++;
 		}
-		cout << endl << "    |    |   "  << endl;
+		cout << endl << "     |     |    "  << endl;
 		if(i != 2)
-			for(int i = 0; i < 15; i++)
+			for(int i = 0; i < 18; i++)
 				cout << "-";
 		cout << endl;
 	}
-		/*
-		cout << endl;
-		cout << "  " << board[i] << " |";
-		cout << "  " << board[i+1] << " |";
-		cout << "  " << board[i+2] << endl;
-		cout << "";
-		if(i < 6)
-		{
-			for(int i = 0; i < 15; i++)
-				cout << "-";
-			cout << endl;
-		}
-	}
-	cout << "    |    |   "; */
 	cout << endl;
 }
 
@@ -74,24 +81,28 @@ bool checkWin(char c)
 	for(int i = 0; i < 9; i+=3)
 		if(board[i] == c && board[i+1] == c && board[i+2] == c)
 		{
+			updateWin(0, i/3);
 			cout << "Horizontal Win!" << endl;
 			return true;
 		}
 	//Vertical
-	for(int i = 0; i < 9; i++)
+	for(int i = 0; i < 3; i++)
 		if(board[i] == c && board[i+3] == c && board[i+6] == c)
 		{
+			updateWin(1, i);
 			cout << "Vertical Win!" << endl;
 		return true;
 		}
 
 	if(board[0] == c && board[4] == c && board[8] == c)
 	{
+		updateWin(2, 0);
 		cout << "Diagonal Win!" << endl;
 		return true;
 	}
 	if(board[2] == c && board[4] == c && board[6] == c)
 	{
+		updateWin(2, 1);
 		cout << "Diagonal Win!" << endl;
 		return true;
 	}
@@ -104,8 +115,8 @@ int main ()
 	cout << "Welcome to Peter von Wilfenhelm's Tic Tac Toe 2015! \n";
 	while(true) 
 	{
-		//update();
-		updateWin(1, 1);
+		update();
+		//updateWin(1, 0);
 		if(turn == 'x')
 			cout << "x turn. ";
 		else
@@ -134,7 +145,8 @@ int main ()
 			{
 				if(checkWin(turn))
 				{
-					update();
+					//update();
+					cout << turn << " has won the game!" << endl;
 					break;
 				}
 				
